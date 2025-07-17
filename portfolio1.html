@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aayush Harshad Paghadar - Backend Developer</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;800&display=swap" rel="stylesheet">
+    
+    <!-- Typed.js for typing animation -->
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+
+    <style>
+        /* Base Styles & Custom Properties */
+        :root {
+            --background: #050505;
+            --surface: #111111;
+            --primary: #FFFFFF;
+            --primary-glow: rgba(255, 255, 255, 0.15);
+            --text-primary: #F0F0F0;
+            --text-secondary: #A0A0A0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            cursor: none;
+        }
+
+        h1, h2, h3, .font-sora { font-family: 'Sora', sans-serif; }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px; height: 8px; background-color: var(--primary);
+            border-radius: 50%; position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%); pointer-events: none;
+            z-index: 9999; transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+        .cursor-dot.hovered {
+            width: 28px; height: 28px; background-color: var(--primary-glow);
+        }
+
+        /* Aurora + Grid Background */
+        #background-effects {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+        #aurora-background {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(ellipse 40% 40% at 20% 25%, rgba(255, 255, 255, 0.1), transparent),
+                              radial-gradient(ellipse 30% 30% at 80% 70%, rgba(255, 255, 255, 0.08), transparent);
+            transition: transform 1s ease-out;
+        }
+        #grid-background {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);
+            background-size: 3.5rem 3.5rem;
+            mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, black 40%, transparent 100%);
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: rgba(5, 5, 5, 0.5);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-link {
+            position: relative; color: var(--text-secondary); transition: color 0.3s ease; font-size: 0.95rem;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--text-primary); }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -6px; left: 0;
+            width: 100%; height: 2px; background-color: var(--primary);
+            transform: scaleX(0); transform-origin: center; transition: transform 0.3s ease;
+        }
+        .nav-link.active::after { transform: scaleX(1); }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            background-color: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Section Title */
+        .section-title {
+            position: relative; display: inline-block; padding-bottom: 0.75rem;
+        }
+        .section-title::after {
+            content: ''; position: absolute; left: 0; bottom: 0;
+            width: 50px; height: 3px; background: var(--primary);
+        }
+
+        /* Card Styles */
+        .content-card {
+            background-color: var(--surface); border: 1px solid var(--border-color);
+            border-radius: 1rem; transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .content-card:hover {
+            transform: translateY(-8px); box-shadow: 0 0 30px rgba(255, 255, 255, 0.07);
+        }
+        
+        /* Experience Timeline */
+        .timeline-item::before {
+            content: ''; position: absolute; left: 5px; top: 0.5rem;
+            width: 1px; height: 100%; background-color: var(--border-color);
+        }
+        .timeline-item:last-child::before { display: none; }
+        .timeline-dot {
+            position: absolute; left: 0; top: 0.5rem;
+            width: 11px; height: 11px; border-radius: 50%;
+            background-color: var(--primary);
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div id="background-effects">
+        <div id="grid-background"></div>
+        <div id="aurora-background"></div>
+    </div>
+    <div class="cursor-dot"></div>
+
+    <!-- Header & Navbar -->
+    <header class="navbar sticky top-0 z-50">
+        <nav class="container mx-auto flex justify-between items-center p-4">
+            <a href="#hero" class="text-2xl font-bold font-sora">AHP.</a>
+            <div class="hidden md:flex items-center space-x-10 font-medium">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#projects" class="nav-link">Projects</a>
+            </div>
+            <a href="#contact" class="hidden md:inline-block px-5 py-2 border border-border-color rounded-full text-sm text-text-primary hover:bg-white hover:text-black transition-colors">
+                Contact Me
+            </a>
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden z-50">
+                <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </nav>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 w-full h-full flex-col items-center justify-center space-y-8 text-3xl font-sora hidden">
+        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#experience" class="mobile-nav-link">Experience</a>
+        <a href="#skills" class="mobile-nav-link">Skills</a>
+        <a href="#projects" class="mobile-nav-link">Projects</a>
+        <a href="#contact" class="mobile-nav-link">Contact</a>
+    </div>
+
+    <main class="container mx-auto px-4 py-16 md:py-24 max-w-5xl">
+
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-[80vh] flex flex-col justify-center items-start text-left">
+            <div class="max-w-4xl">
+                <p class="font-sora text-lg text-text-primary font-medium reveal">Aayush Harshad Paghadar</p>
+                <h1 class="text-5xl md:text-7xl font-extrabold my-4 text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 reveal" style="transition-delay: 0.1s;">
+                    Backend Developer & API Architect
+                </h1>
+                <div class="text-xl md:text-2xl text-text-secondary h-10 reveal" style="transition-delay: 0.2s;">
+                    <span id="typed-subtitle"></span>
+                </div>
+                <p class="max-w-2xl text-text-secondary mt-6 text-base md:text-lg leading-relaxed reveal" style="transition-delay: 0.3s;">
+                    I design and build scalable, efficient server-side applications, transforming complex requirements into elegant, functional code.
+                </p>
+                <div class="mt-10 flex items-center space-x-6 reveal" style="transition-delay: 0.4s;">
+                    <a href="#contact" class="px-6 py-3 font-semibold text-black bg-primary rounded-md shadow-lg hover:bg-gray-200 transition-colors">
+                        Get in Touch
+                    </a>
+                    <div class="flex space-x-4">
+                        <a href="[Your LinkedIn URL]" target="_blank" class="text-text-secondary hover:text-primary transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                        <a href="[Your GitHub URL]" target="_blank" class="text-text-secondary hover:text-primary transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.11.82-.26.82-.577v-2.234c-3.338.725-4.042-1.61-4.042-1.61-.546-1.387-1.334-1.757-1.334-1.757-1.087-.744.084-.73.084-.73 1.205.086 1.838 1.238 1.838 1.238 1.07 1.835 2.809 1.305 3.49.998.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.382 1.235-3.22-.12-.3-.535-1.52.117-3.176 0 0 1.007-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.294-1.552 3.3-1.23 3.3-1.23.653 1.656.238 2.876.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.806 5.62-5.474 5.92.43.37.823 1.102.823 2.222v3.293c0 .319.217.69.825.576C20.565 21.8 24 17.302 24 12c0-6.627-5.373-12-12-12z" clip-rule="evenodd"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-24">
+            <div class="reveal">
+                <h2 class="section-title text-3xl md:text-4xl font-bold">About Me</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10">
+                    <div class="md:col-span-2 text-text-secondary text-base md:text-lg leading-relaxed space-y-4">
+                        <p>Hello! I'm a dedicated and detail-oriented Backend Developer currently pursuing my BE in Computer Science. My journey into tech began with an intensive internship at PEDALS UP, where I dove headfirst into real-world projects, building my skills in creating robust and scalable applications.</p>
+                        <p>I thrive on the challenge of architecting complex systems and writing clean, efficient code. I'm always eager to learn new technologies and methodologies to improve my craft.</p>
+                    </div>
+                    <div class="flex justify-center items-center">
+                         <div class="w-64 h-80 content-card p-4">
+                            <img src="https://placehold.co/300x400/111111/EAEAEA?text=AHP" alt="Aayush Harshad Paghadar" class="w-full h-full object-cover rounded-md">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-24">
+            <div class="reveal">
+                <h2 class="section-title text-3xl md:text-4xl font-bold">Career Journey</h2>
+                <div class="mt-12">
+                    <div class="relative timeline-item pl-8 pb-8">
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium text-text-secondary">Dec 2024 – Present</p>
+                        <h3 class="text-2xl font-bold text-text-primary mt-1">Backend Developer Intern</h3>
+                        <p class="text-lg text-text-secondary mb-4">PEDALS UP - Ahmedabad, Gujarat</p>
+                        <ul class="list-disc list-outside ml-5 space-y-2 text-text-secondary">
+                            <li>Developed and optimized RESTful APIs for high-impact projects using Node.js, TypeScript, and NestJS.</li>
+                            <li>Engineered intricate game logic and sophisticated timing-based systems for client platforms.</li>
+                            <li>Managed and refined database schemas using TypeORM and Prisma to ensure data integrity.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-24">
+            <div class="reveal">
+                <h2 class="section-title text-3xl md:text-4xl font-bold">Core Technologies</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-12">
+                    <div class="content-card p-6">
+                        <div class="flex items-center gap-4 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M10 14l2-2 2 2M12 18V2M21 18h-6M3 18h6M2 22h20"/><path d="M12 14v4"/></svg><h3 class="text-xl font-bold">Languages & Frameworks</h3></div>
+                        <p class="text-text-secondary">TypeScript, JavaScript, Node.js, NestJS</p>
+                    </div>
+                    <div class="content-card p-6">
+                        <div class="flex items-center gap-4 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><h3 class="text-xl font-bold">Databases & ORMs</h3></div>
+                        <p class="text-text-secondary">PostgreSQL, MongoDB, TypeORM, Prisma</p>
+                    </div>
+                    <div class="content-card p-6">
+                        <div class="flex items-center gap-4 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M9 3v18"/><path d="m15 9-3 3 3 3"/></svg><h3 class="text-xl font-bold">Tools & Platforms</h3></div>
+                        <p class="text-text-secondary">Git, GitHub, Postman, Firebase, Docker</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24">
+            <div class="reveal">
+                <h2 class="section-title text-3xl md:text-4xl font-bold">Featured Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                    <a href="#" class="content-card block group">
+                        <div class="overflow-hidden rounded-t-lg"><img src="https://placehold.co/600x400/111111/FFFFFF?text=Project+1" alt="Project 1" class="rounded-t-lg w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"></div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold">Project Title 1</h3>
+                            <p class="text-text-secondary my-3">A brief description of your project, what it does, and what problem it solves.</p>
+                            <div class="flex flex-wrap gap-2 my-4">
+                                <span class="text-xs font-medium bg-gray-800 text-gray-300 px-2 py-1 rounded-full">NestJS</span>
+                                <span class="text-xs font-medium bg-gray-800 text-gray-300 px-2 py-1 rounded-full">PostgreSQL</span>
+                            </div>
+                            <span class="font-semibold text-primary">View Project &rarr;</span>
+                        </div>
+                    </a>
+                    <a href="#" class="content-card block group">
+                        <div class="overflow-hidden rounded-t-lg"><img src="https://placehold.co/600x400/111111/FFFFFF?text=Project+2" alt="Project 2" class="rounded-t-lg w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"></div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold">Project Title 2</h3>
+                            <p class="text-text-secondary my-3">Another project showcasing different aspects of your skills.</p>
+                             <div class="flex flex-wrap gap-2 my-4">
+                                <span class="text-xs font-medium bg-gray-800 text-gray-300 px-2 py-1 rounded-full">Node.js</span>
+                                <span class="text-xs font-medium bg-gray-800 text-gray-300 px-2 py-1 rounded-full">MongoDB</span>
+                            </div>
+                            <span class="font-semibold text-primary">View Project &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24">
+            <div class="content-card p-8 md:p-12 text-center reveal">
+                <h2 class="text-4xl font-bold">Let's Build Together</h2>
+                <p class="text-text-secondary mt-4 mb-8 text-lg max-w-2xl mx-auto">
+                    I'm currently available for freelance work and open to new opportunities. If you have a project in mind, let's connect.
+                </p>
+                <a href="mailto:[Your Email Address]" class="inline-block text-lg font-semibold bg-primary text-black px-8 py-3 rounded-md hover:bg-gray-200 transition-colors">
+                    [Your Email Address]
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-border-color py-8">
+        <div class="container mx-auto text-center text-text-secondary">
+            <p>&copy; 2025 Aayush Harshad Paghadar. Designed with care.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Custom Cursor ---
+            const cursorDot = document.querySelector('.cursor-dot');
+            const auroraBg = document.getElementById('aurora-background');
+            window.addEventListener('mousemove', e => {
+                const { clientX, clientY } = e;
+                cursorDot.style.transform = `translate(${clientX}px, ${clientY}px)`;
+                auroraBg.style.transform = `translate(-${clientX / 10}px, -${clientY / 10}px)`;
+            });
+
+            document.querySelectorAll('a, button, .content-card').forEach(el => {
+                el.addEventListener('mouseenter', () => cursorDot.classList.add('hovered'));
+                el.addEventListener('mouseleave', () => cursorDot.classList.remove('hovered'));
+            });
+
+            // --- Typed.js Animation ---
+            new Typed('#typed-subtitle', {
+                strings: ['Building Scalable APIs.', 'Solving Complex Problems.', 'Writing Clean Code.'],
+                typeSpeed: 50, backSpeed: 25, backDelay: 2000, loop: true,
+            });
+            
+            // --- Mobile Menu Toggle ---
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('menu-open-icon');
+            const closeIcon = document.getElementById('menu-close-icon');
+            
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('flex');
+                openIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('flex');
+                    openIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                });
+            });
+
+            // --- Navbar Active State on Scroll ---
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const observerOptions = { root: null, rootMargin: '-40% 0px -60% 0px', threshold: 0 };
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => sectionObserver.observe(section));
+            
+            // --- Reveal elements on scroll ---
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+        });
+    </script>
+</body>
+</html>

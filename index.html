@@ -49,7 +49,7 @@
             --terminal-magenta: #FF00FF;
             --terminal-red: #ff4444;
             --terminal-yellow: #ffaa00;
-            --terminal-green: #00ff00;
+            --terminal-green: #FFB800;
         }
         
         html { scroll-behavior: smooth; }
@@ -313,9 +313,9 @@
             position: relative;
         }
         .testimonial-card::before {
-            content: '"'; position: absolute; top: -10px; left: 20px;
-            font-size: 4rem; color: var(--terminal-cyan);
-            font-family: 'Sora', sans-serif;
+            content: '"'; position: absolute; top: 10px; left: 20px;
+            font-size: 2rem; color: var(--terminal-cyan);
+            font-family: 'Sora', sans-serif; opacity: 0.3;
         }
     </style>
 </head>
@@ -440,7 +440,7 @@
                 <div class="md:col-span-2 text-text-secondary text-base md:text-lg leading-relaxed space-y-4 reveal-right">
                     <p>Hello! I'm a dedicated and detail-oriented Backend Developer currently pursuing my BE in Computer Science. My journey into tech began with an intensive internship at <span class="highlight-yellow">PEDALS UP</span> with 7 months of intensive internship experience specializing in Node.js, TypeScript, NestJS, PostgreSQL, TypeORM, and Prisma ORM, building my skills in creating robust and scalable APIs.</p>
                     <p>I thrive on the challenge of architecting complex systems and writing clean, efficient code. I'm always eager to learn new technologies and methodologies to improve my craft.</p>
-                    <p class="highlight-green">💰 Competitive rates • 📅 Available for immediate start • 🌍 Remote-friendly</p>
+                    <p class="highlight-green">📅 Available for immediate start • 🌍 Remote-friendly</p>
                 </div>
             </div>
         </section>
@@ -457,18 +457,40 @@
                 </div>
                 <div class="relative pl-4">
                     <div class="absolute left-0 top-0 h-full w-px bg-border-color"></div>
-                    <div class="mono text-sm space-y-6">
-                        <p><span class="highlight-blue">Dec 2024 – Present</span></p>
-                        <h3 class="text-xl font-bold text-text-primary">Backend Developer Intern</h3>
-                        <p class="text-text-secondary">PEDALS UP - Ahmedabad, Gujarat</p>
-                        <ul class="list-none space-y-2 text-text-secondary pl-4">
-                            <li><span class="highlight-blue">></span> Developed and optimized RESTful APIs and complex backend logic across multiple high-impact projects, utilizing <span class="highlight-yellow">Node.js, TypeScript, NestJS, PostgreSQL, TypeORM, and Prisma ORM.</span></li>
-                            <li><span class="highlight-blue">></span> Engineered intricate game logic for <span class="highlight-yellow">Royal Mega</span>, a running project, demonstrating strong problem-solving and algorithmic skills.</li>
-                            <li><span class="highlight-blue">></span> Designed and implemented a sophisticated timing-based system for <span class="highlight-yellow">Quickly Drive</span> (a driving school platform), handling lesson bookings, instructor availability, and time proposals.</li>
-                            <li><span class="highlight-blue">></span> Integrated third-party APIs including Instagram, Facebook for functionalities like posting media by influencers for campaigns in <span class="highlight-yellow">Little Light</span> project.</li>
-                            <li><span class="highlight-blue">></span> Managed and refined database schemas and ORM configurations (TypeORM, PrismaORM) to ensure data integrity and efficient operations across projects.</li>
-                            <li><span class="highlight-blue">></span> Contributed to the development of a comprehensive business platform <span class="highlight-yellow">Yett</span> managing stores, malls, offers, and events.</li>
-                        </ul>
+                    <div class="mono text-sm space-y-8">
+                        <div class="space-y-3">
+                            <p><span class="highlight-blue">Dec 2024 – Present</span></p>
+                            <h3 class="text-2xl font-bold text-text-primary">Backend Developer Intern</h3>
+                            <p class="text-text-secondary text-lg">PEDALS UP - Ahmedabad, Gujarat</p>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-lg font-semibold text-terminal-cyan mb-3">🚀 Core Technologies</h4>
+                                <p class="text-text-secondary leading-relaxed">
+                                    Specialized in <span class="highlight-yellow">Node.js, TypeScript, NestJS, PostgreSQL, TypeORM, and Prisma ORM</span> 
+                                    to develop and optimize RESTful APIs and complex backend logic across multiple high-impact projects.
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-semibold text-terminal-cyan mb-3">🎮 Key Projects</h4>
+                                <ul class="space-y-2 text-text-secondary">
+                                    <li><span class="highlight-blue">•</span> <span class="highlight-yellow">Royal Mega:</span> Engineered intricate game logic with complex algorithms</li>
+                                    <li><span class="highlight-blue">•</span> <span class="highlight-yellow">Quickly Drive:</span> Built sophisticated timing-based booking system</li>
+                                    <li><span class="highlight-blue">•</span> <span class="highlight-yellow">Little Light:</span> Integrated Instagram & Facebook APIs for influencer campaigns</li>
+                                    <li><span class="highlight-blue">•</span> <span class="highlight-yellow">Yett:</span> Developed comprehensive business platform for stores and malls</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-semibold text-terminal-cyan mb-3">⚡ Technical Impact</h4>
+                                <p class="text-text-secondary leading-relaxed">
+                                    Managed database schemas and ORM configurations to ensure data integrity and efficient operations. 
+                                    Successfully handled complex third-party integrations and optimized system performance.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -493,19 +515,19 @@
                         <div>
                             <div class="flex justify-between text-sm">
                                 <span>Node.js</span>
-                                <span class="highlight-blue">85%</span>
+                                <span class="highlight-blue">90%</span>
                             </div>
                             <div class="skill-progress">
-                                <div class="skill-progress-bar" data-width="85"></div>
+                                <div class="skill-progress-bar" data-width="90"></div>
                             </div>
                         </div>
                         <div>
                             <div class="flex justify-between text-sm">
                                 <span>NestJS</span>
-                                <span class="highlight-blue">80%</span>
+                                <span class="highlight-blue">55%</span>
                             </div>
                             <div class="skill-progress">
-                                <div class="skill-progress-bar" data-width="80"></div>
+                                <div class="skill-progress-bar" data-width="55"></div>
                             </div>
                         </div>
                     </div>
@@ -516,28 +538,28 @@
                         <div>
                             <div class="flex justify-between text-sm">
                                 <span>PostgreSQL</span>
-                                <span class="highlight-blue">85%</span>
+                                <span class="highlight-blue">90%</span>
                             </div>
                             <div class="skill-progress">
-                                <div class="skill-progress-bar" data-width="85"></div>
+                                <div class="skill-progress-bar" data-width="90"></div>
                             </div>
                         </div>
                         <div>
                             <div class="flex justify-between text-sm">
-                                <span>TypeORM</span>
-                                <span class="highlight-blue">80%</span>
-                            </div>
-                            <div class="skill-progress">
-                                <div class="skill-progress-bar" data-width="80"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-sm">
-                                <span>Prisma ORM</span>
+                                <span>MongoDB</span>
                                 <span class="highlight-blue">75%</span>
                             </div>
                             <div class="skill-progress">
                                 <div class="skill-progress-bar" data-width="75"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm">
+                                <span>Prisma & TypeORM</span>
+                                <span class="highlight-blue">85%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="85"></div>
                             </div>
                         </div>
                     </div>
@@ -557,10 +579,10 @@
                         <div>
                             <div class="flex justify-between text-sm">
                                 <span>Postman</span>
-                                <span class="highlight-blue">85%</span>
+                                <span class="highlight-blue">99%</span>
                             </div>
                             <div class="skill-progress">
-                                <div class="skill-progress-bar" data-width="85"></div>
+                                <div class="skill-progress-bar" data-width="99"></div>
                             </div>
                         </div>
                         <div>
@@ -582,42 +604,45 @@
             <h2 class="text-4xl font-bold mono highlight-blue mb-12">/achievements</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="code-card p-6">
-                    <h3 class="text-xl font-bold mono mb-4">🏆 Professional Milestones</h3>
+                    <h3 class="text-xl font-bold mono mb-4">🎯 Project Complexity</h3>
                     <div class="space-y-3">
                         <div class="achievement-badge">
-                            <span>🚀</span>
-                            <span>7+ Months Backend Experience</span>
-                        </div>
-                        <div class="achievement-badge">
-                            <span>⚡</span>
-                            <span>4+ Production Projects</span>
-                        </div>
-                        <div class="achievement-badge">
-                            <span>🔧</span>
+                            <span>🎮</span>
                             <span>Complex Game Logic Implementation</span>
                         </div>
                         <div class="achievement-badge">
-                            <span>🌐</span>
-                            <span>Third-party API Integrations</span>
+                            <span>⏰</span>
+                            <span>Advanced Timing Systems</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span>🔗</span>
+                            <span>Multi-Platform API Integrations</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span>🏢</span>
+                            <span>Enterprise Business Solutions</span>
                         </div>
                     </div>
                 </div>
                 <div class="code-card p-6">
-                    <h3 class="text-xl font-bold mono mb-4">📊 GitHub Stats</h3>
+                    <h3 class="text-xl font-bold mono mb-4">⚡ Technical Excellence</h3>
                     <div class="space-y-4">
                         <div class="flex justify-between">
-                            <span class="text-text-secondary">Total Repositories:</span>
-                            <span class="highlight-blue">15+</span>
+                            <span class="text-text-secondary">Production Projects:</span>
+                            <span class="highlight-blue">4+ Live Systems</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-text-secondary">Languages Used:</span>
-                            <span class="highlight-blue">TypeScript, JavaScript</span>
+                            <span class="text-text-secondary">API Endpoints:</span>
+                            <span class="highlight-blue">50+ RESTful APIs</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-text-secondary">Favorite Stack:</span>
-                            <span class="highlight-blue">NestJS + PostgreSQL</span>
+                            <span class="text-text-secondary">Database Optimization:</span>
+                            <span class="highlight-blue">High Performance</span>
                         </div>
-                        <a href="https://github.com/Aayush21122" target="_blank" class="btn-secondary text-sm">View GitHub Profile</a>
+                        <div class="flex justify-between">
+                            <span class="text-text-secondary">Code Quality:</span>
+                            <span class="highlight-blue">Clean Architecture</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -914,20 +939,36 @@
             const submitBtn = document.getElementById('submit-btn');
             const formStatus = document.getElementById('form-status');
             
+            // Initialize EmailJS
+            emailjs.init("BJm7P4gY0UMtmxcAD"); // You'll need to get this from EmailJS dashboard
+
+            // Contact Form - Replace the existing contact form handler
             contactForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
                 submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
                 
-                // Simulate form submission
-                setTimeout(() => {
+                const formData = new FormData(contactForm);
+                const templateParams = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    project_type: formData.get('project_type'),
+                    message: formData.get('message')
+                };
+                
+                try {
+                    await emailjs.send('service_sbqrzxx', 'template_gmbejnp', templateParams);
                     formStatus.style.display = 'block';
-                    formStatus.innerHTML = '<div class="text-terminal-green">✅ Message sent successfully! I\'ll get back to you soon.</div>';
+                    formStatus.innerHTML = '<div class="text-amber-400">✅ Message sent successfully! I\'ll get back to you soon.</div>';
                     contactForm.reset();
-                    submitBtn.textContent = 'Send Message';
-                    submitBtn.disabled = false;
-                }, 2000);
+                } catch (error) {
+                    formStatus.style.display = 'block';
+                    formStatus.innerHTML = '<div class="text-red-400">❌ Failed to send message. Please email me directly.</div>';
+                }
+                
+                submitBtn.textContent = 'Send Message';
+                submitBtn.disabled = false;
             });
             
             // Resume Download

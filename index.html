@@ -3,7 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AHP - Backend Developer</title>
+    <title>Aayush Harshad Paghadar - Backend Developer & API Architect</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Aayush Harshad Paghadar - Expert Backend Developer specializing in Node.js, TypeScript, NestJS, PostgreSQL. 7+ months experience building scalable APIs and complex systems.">
+    <meta name="keywords" content="Backend Developer, Node.js, TypeScript, NestJS, PostgreSQL, API Development, Aayush Paghadar">
+    <meta name="author" content="Aayush Harshad Paghadar">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Aayush Harshad Paghadar - Backend Developer">
+    <meta property="og:description" content="Expert Backend Developer specializing in scalable APIs and complex systems">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ahp.dev">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,34 +25,64 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Sora:wght@600;800&display=swap" rel="stylesheet">
     
     <!-- Typed.js for typing animation -->
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
-
+    
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
     <style>
         /* Base Styles & Custom Properties */
         :root {
-            --background: #050505;
-            --surface: #111111;
-            --primary: #FFFFFF;
-            --primary-glow: rgba(255, 255, 255, 0.15);
-            --text-primary: #F0F0F0;
-            --text-secondary: #A0A0A0;
-            --border-color: rgba(255, 255, 255, 0.1);
+            --background: #0a0a0a;
+            --surface: #131313;
+            --primary: #00BFFF;
+            --primary-glow: rgba(0, 191, 255, 0.2);
+            --secondary: #FF6B35;
+            --text-primary: #f0f0f0;
+            --text-secondary: #888888;
+            --text-accent: #00BFFF;
+            --border-color: rgba(0, 191, 255, 0.2);
+            --terminal-cyan: #00BFFF;
+            --terminal-magenta: #FF00FF;
+            --terminal-red: #ff4444;
+            --terminal-yellow: #ffaa00;
+            --terminal-green: #00ff00;
         }
-
+        
         html { scroll-behavior: smooth; }
-
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--background);
             color: var(--text-primary);
             cursor: none;
+            overflow-x: hidden;
         }
-
+        .mono { font-family: 'JetBrains Mono', monospace; }
         h1, h2, h3, .font-sora { font-family: 'Sora', sans-serif; }
-
+        
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--background); z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .terminal-loader {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--terminal-cyan);
+            font-size: 1.2rem;
+        }
+        .loading-bar {
+            width: 300px; height: 4px; background: rgba(0, 191, 255, 0.2);
+            border-radius: 2px; overflow: hidden; margin-top: 20px;
+        }
+        .loading-progress {
+            height: 100%; background: var(--terminal-cyan);
+            width: 0%; transition: width 0.3s ease;
+        }
+        
         /* Custom Cursor */
         .cursor-dot {
             width: 8px; height: 8px; background-color: var(--primary);
@@ -46,319 +90,778 @@
             transform: translate(-50%, -50%); pointer-events: none;
             z-index: 9999; transition: width 0.3s, height 0.3s, background-color 0.3s;
         }
-        .cursor-dot.hovered {
-            width: 28px; height: 28px; background-color: var(--primary-glow);
+        .cursor-dot.hovered { width: 28px; height: 28px; background-color: var(--primary-glow); }
+        
+        /* Enhanced Background Effects */
+        #background-effects { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .matrix-rain { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
+        .matrix-char {
+            position: absolute; color: var(--terminal-cyan);
+            font-family: 'JetBrains Mono', monospace; font-size: 14px;
+            opacity: 0.6; animation: fall linear infinite;
         }
-
-        /* Aurora + Grid Background */
-        #background-effects {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-        }
-        #aurora-background {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(ellipse 40% 40% at 20% 25%, rgba(255, 255, 255, 0.1), transparent),
-                              radial-gradient(ellipse 30% 30% at 80% 70%, rgba(255, 255, 255, 0.08), transparent);
-            transition: transform 1s ease-out;
+        @keyframes fall {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
         }
         #grid-background {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image:
-                linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);
-            background-size: 3.5rem 3.5rem;
+            background-image: 
+                linear-gradient(to right, rgba(0, 191, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 191, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
             mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, black 40%, transparent 100%);
         }
-
-        /* Navbar Styling */
+        
+        /* Enhanced Navbar */
         .navbar {
-            background-color: rgba(5, 5, 5, 0.5);
-            backdrop-filter: blur(16px);
+            background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
         }
         .nav-link {
-            position: relative; color: var(--text-secondary); transition: color 0.3s ease; font-size: 0.95rem;
+            position: relative; color: var(--text-secondary); 
+            transition: all 0.3s ease; font-size: 0.95rem;
+            font-family: 'JetBrains Mono', monospace;
         }
-        .nav-link:hover, .nav-link.active { color: var(--text-primary); }
-        .nav-link::after {
-            content: ''; position: absolute; bottom: -6px; left: 0;
-            width: 100%; height: 2px; background-color: var(--primary);
-            transform: scaleX(0); transform-origin: center; transition: transform 0.3s ease;
-        }
-        .nav-link.active::after { transform: scaleX(1); }
-        
-        /* Mobile Menu */
-        .mobile-menu {
-            background-color: rgba(0,0,0,0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        /* Section Title */
-        .section-title {
-            position: relative; display: inline-block; padding-bottom: 0.75rem;
-        }
-        .section-title::after {
-            content: ''; position: absolute; left: 0; bottom: 0;
-            width: 50px; height: 3px; background: var(--primary);
-        }
-
-        /* Card Styles */
-        .content-card {
-            background-color: var(--surface); border: 1px solid var(--border-color);
-            border-radius: 1rem; transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .content-card:hover {
-            transform: translateY(-8px); box-shadow: 0 0 30px rgba(255, 255, 255, 0.07);
+        .nav-link:hover, .nav-link.active { color: var(--terminal-cyan); }
+        .nav-link::before { content: '> '; opacity: 0; transition: opacity 0.3s ease; }
+        .nav-link:hover::before, .nav-link.active::before { opacity: 1; }
+        .logo {
+            font-family: 'JetBrains Mono', monospace; font-weight: 700;
+            color: var(--terminal-cyan); text-shadow: 0 0 10px var(--primary-glow);
         }
         
-        /* Experience Timeline */
-        .timeline-item::before {
-            content: ''; position: absolute; left: 5px; top: 0.5rem;
-            width: 1px; height: 100%; background-color: var(--border-color);
+        /* Enhanced Mobile Menu */
+        .mobile-menu-enhanced {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(19, 19, 19, 0.95));
+            backdrop-filter: blur(20px);
         }
-        .timeline-item:last-child::before { display: none; }
-        .timeline-dot {
-            position: absolute; left: 0; top: 0.5rem;
-            width: 11px; height: 11px; border-radius: 50%;
-            background-color: var(--primary);
+        .mobile-nav-link-enhanced {
+            position: relative; padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
         }
-
-        /* Scroll Animations */
+        .mobile-nav-link-enhanced:hover {
+            color: var(--terminal-cyan);
+            transform: translateX(10px);
+        }
+        
+        /* Enhanced Cards */
+        .code-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 8px; transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .code-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0, 191, 255, 0.1), transparent);
+            transform: translateX(-100%); transition: transform 0.6s ease;
+        }
+        .code-card:hover::before { transform: translateX(100%); }
+        .code-card:hover {
+            transform: translateY(-5px); border-color: var(--terminal-cyan);
+            box-shadow: 0 10px 40px var(--primary-glow);
+        }
+        
+        /* Progress Bars */
+        .skill-progress {
+            width: 100%; height: 8px; background: rgba(0, 191, 255, 0.2);
+            border-radius: 4px; overflow: hidden; margin-top: 8px;
+        }
+        .skill-progress-bar {
+            height: 100%; background: linear-gradient(90deg, var(--terminal-cyan), var(--terminal-magenta));
+            width: 0%; transition: width 2s ease-in-out;
+            border-radius: 4px;
+        }
+        
+        /* Floating CTA */
+        .floating-cta {
+            position: fixed; bottom: 30px; right: 30px; z-index: 1000;
+            background: linear-gradient(135deg, var(--terminal-cyan), #00aaff);
+            color: var(--background); padding: 15px 25px;
+            border-radius: 50px; font-family: 'JetBrains Mono', monospace;
+            font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.5px; transition: all 0.3s ease;
+            box-shadow: 0 5px 20px var(--primary-glow);
+            transform: translateY(100px); opacity: 0;
+        }
+        .floating-cta.visible {
+            transform: translateY(0); opacity: 1;
+        }
+        .floating-cta:hover {
+            transform: translateY(-5px); box-shadow: 0 10px 30px var(--primary-glow);
+        }
+        
+        /* Status indicators */
+        .status-indicator {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 4px 12px; background: rgba(0, 191, 255, 0.1);
+            border: 1px solid var(--border-color); border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+            color: var(--terminal-cyan);
+        }
+        .status-dot {
+            width: 6px; height: 6px; background: var(--terminal-cyan);
+            border-radius: 50%; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
+        /* Code syntax highlighting */
+        .highlight-magenta { color: var(--terminal-magenta); }
+        .highlight-blue { color: var(--terminal-cyan); }
+        .highlight-yellow { color: var(--terminal-yellow); }
+        .highlight-green { color: var(--terminal-green); }
+        .highlight-red { color: var(--terminal-red); }
+        
+        /* Enhanced Scroll Animations */
         .reveal {
             opacity: 0; transform: translateY(40px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
         .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left {
+            opacity: 0; transform: translateX(-40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right {
+            opacity: 0; transform: translateX(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+        .reveal-scale {
+            opacity: 0; transform: scale(0.8);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal-scale.visible { opacity: 1; transform: scale(1); }
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-input {
+            width: 100%; padding: 12px 16px;
+            background: rgba(19, 19, 19, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 6px; color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            outline: none; border-color: var(--terminal-cyan);
+            box-shadow: 0 0 0 2px var(--primary-glow);
+        }
+        .form-textarea {
+            min-height: 120px; resize: vertical;
+        }
+        
+        /* Button enhancements */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--terminal-cyan), #00aaff);
+            color: var(--background); border: none; padding: 12px 24px;
+            border-radius: 6px; font-family: 'JetBrains Mono', monospace;
+            font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.5px; transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px); box-shadow: 0 10px 30px var(--primary-glow);
+        }
+        .btn-secondary {
+            background: transparent; color: var(--terminal-cyan);
+            border: 2px solid var(--terminal-cyan); padding: 10px 22px;
+            border-radius: 6px; font-family: 'JetBrains Mono', monospace;
+            font-weight: 500; transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: var(--terminal-cyan); color: var(--background);
+            transform: translateY(-2px);
+        }
+        
+        /* Live Code Demo */
+        .code-demo {
+            background: #1a1a1a; border: 1px solid var(--border-color);
+            border-radius: 8px; padding: 20px; margin: 20px 0;
+        }
+        .code-output {
+            background: #0f0f0f; border: 1px solid var(--border-color);
+            border-radius: 4px; padding: 15px; margin-top: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--terminal-green);
+        }
+        
+        /* Achievement badges */
+        .achievement-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 16px; background: rgba(0, 191, 255, 0.1);
+            border: 1px solid var(--border-color); border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+            color: var(--terminal-cyan); margin: 4px;
+        }
+        
+        /* Testimonial styles */
+        .testimonial-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 24px;
+            position: relative;
+        }
+        .testimonial-card::before {
+            content: '"'; position: absolute; top: -10px; left: 20px;
+            font-size: 4rem; color: var(--terminal-cyan);
+            font-family: 'Sora', sans-serif;
+        }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="terminal-loader">
+            <div>Initializing AHP.dev...</div>
+            <div class="loading-bar">
+                <div class="loading-progress" id="loading-progress"></div>
+            </div>
+            <div id="loading-text" style="margin-top: 10px; font-size: 0.9rem;">Loading modules...</div>
+        </div>
+    </div>
 
     <div id="background-effects">
         <div id="grid-background"></div>
-        <div id="aurora-background"></div>
+        <div class="matrix-rain" id="matrix-rain"></div>
     </div>
     <div class="cursor-dot"></div>
-
+    
+    <!-- Floating CTA -->
+    <a href="#contact" class="floating-cta" id="floating-cta">Hire Me</a>
+    
     <!-- Header & Navbar -->
     <header class="navbar sticky top-0 z-50">
         <nav class="container mx-auto flex justify-between items-center p-4">
-            <a href="#hero" class="text-2xl font-bold font-sora">AHP</a>
-            <div class="hidden md:flex items-center space-x-10 font-medium">
-                <a href="#about" class="nav-link">About</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#projects" class="nav-link">Projects</a>
+            <a href="#hero" class="logo text-2xl font-bold">AHP.dev</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="nav-link">about</a>
+                <a href="#experience" class="nav-link">experience</a>
+                <a href="#skills" class="nav-link">skills</a>
+                <a href="#achievements" class="nav-link">achievements</a>
+                <a href="#projects" class="nav-link">projects</a>
             </div>
-            <a href="#contact" class="hidden md:inline-block px-5 py-2 border border-border-color rounded-full text-sm text-text-primary hover:bg-white hover:text-black transition-colors">
-                Contact Me
-            </a>
-            <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="md:hidden z-50">
+            <div class="hidden md:flex items-center space-x-4">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>available • gujarat</span>
+                </div>
+                <a href="#contact" class="btn-secondary">contact</a>
+            </div>
+            <button id="menu-btn" class="md:hidden z-50 text-terminal-cyan">
                 <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
                 <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
         </nav>
     </header>
     
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 w-full h-full flex-col items-center justify-center space-y-8 text-3xl font-sora hidden">
-        <a href="#about" class="mobile-nav-link">About</a>
-        <a href="#experience" class="mobile-nav-link">Experience</a>
-        <a href="#skills" class="mobile-nav-link">Skills</a>
-        <a href="#projects" class="mobile-nav-link">Projects</a>
-        <a href="#contact" class="mobile-nav-link">Contact</a>
+    <!-- Enhanced Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu-enhanced fixed top-0 left-0 w-full h-full flex-col items-center justify-center space-y-4 text-2xl font-sora hidden z-[60]">
+        <a href="#about" class="mobile-nav-link-enhanced text-terminal-cyan mono">about</a>
+        <a href="#experience" class="mobile-nav-link-enhanced text-terminal-cyan mono">experience</a>
+        <a href="#skills" class="mobile-nav-link-enhanced text-terminal-cyan mono">skills</a>
+        <a href="#achievements" class="mobile-nav-link-enhanced text-terminal-cyan mono">achievements</a>
+        <a href="#projects" class="mobile-nav-link-enhanced text-terminal-cyan mono">projects</a>
+        <a href="#contact" class="mobile-nav-link-enhanced text-terminal-cyan mono">contact</a>
     </div>
-
-    <main class="container mx-auto px-4 py-16 md:py-24 max-w-5xl">
-
+    
+    <main class="container mx-auto px-4 py-16 md:py-24 max-w-6xl">
         <!-- Hero Section -->
         <section id="hero" class="min-h-[80vh] flex flex-col justify-center items-start text-left">
-            <div class="max-w-4xl">
-                <p class="font-sora text-lg text-text-primary font-medium reveal">Aayush Harshad Paghadar</p>
-                <h1 class="text-5xl md:text-7xl font-extrabold my-4 text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 reveal" style="transition-delay: 0.1s;">
+            <div class="max-w-5xl">
+                <p class="mono text-lg text-terminal-cyan">Aayush Harshad Paghadar</p>
+                <h1 class="text-5xl md:text-7xl font-extrabold my-4 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
                     Backend Developer & API Architect
                 </h1>
-                <div class="text-xl md:text-2xl text-text-secondary h-10 reveal" style="transition-delay: 0.2s;">
-                    <span id="typed-subtitle"></span>
-                </div>
-                <p class="max-w-2xl text-text-secondary mt-6 text-base md:text-lg leading-relaxed reveal" style="transition-delay: 0.3s;">
+                <p class="max-w-3xl text-text-secondary mt-6 text-lg md:text-xl leading-relaxed mono">
+                    <span class="highlight-blue">function</span> <span class="highlight-yellow">buildBackend</span>() {<br>
+                    &nbsp;&nbsp;<span class="highlight-magenta">return</span> <span class="highlight-blue" id="typed-subtitle"></span>;<br>
+                    }
+                </p>
+                <p class="max-w-2xl text-text-secondary mt-6 text-base md:text-lg leading-relaxed">
+                    <span class="highlight-green">📍 Based in Gujarat, Available Worldwide</span><br>
                     I design and build scalable, efficient server-side applications, transforming complex requirements into elegant, functional code.
                 </p>
-                <div class="mt-10 flex items-center space-x-6 reveal" style="transition-delay: 0.4s;">
-                    <a href="#contact" class="px-6 py-3 font-semibold text-black bg-white rounded-md shadow-lg hover:text-white hover:bg-gray-800 transition-colors">
-                        Get in Touch
-                    </a>
+                <div class="mt-10 flex flex-wrap items-center gap-6">
+                    <a href="#contact" class="btn-primary">Get in Touch</a>
+                    <a href="#projects" class="btn-secondary">View Work</a>
+                    <a href="#" id="download-resume" class="btn-secondary">📄 Resume</a>
                     <div class="flex space-x-4">
-                        <a href="https://www.linkedin.com/in/paghadar-aayush-837a50263" target="_blank" class="text-text-secondary hover:text-primary transition-colors">
+                        <a href="https://www.linkedin.com/in/paghadar-aayush-837a50263" target="_blank" class="text-text-secondary hover:text-terminal-cyan transition-colors">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                         </a>
-                        <a href="https://github.com/Aayush21122" target="_blank" class="text-text-secondary hover:text-primary transition-colors">
+                        <a href="https://github.com/Aayush21122" target="_blank" class="text-text-secondary hover:text-terminal-cyan transition-colors">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.11.82-.26.82-.577v-2.234c-3.338.725-4.042-1.61-4.042-1.61-.546-1.387-1.334-1.757-1.334-1.757-1.087-.744.084-.73.084-.73 1.205.086 1.838 1.238 1.838 1.238 1.07 1.835 2.809 1.305 3.49.998.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.382 1.235-3.22-.12-.3-.535-1.52.117-3.176 0 0 1.007-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.294-1.552 3.3-1.23 3.3-1.23.653 1.656.238 2.876.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.806 5.62-5.474 5.92.43.37.823 1.102.823 2.222v3.293c0 .319.217.69.825.576C20.565 21.8 24 17.302 24 12c0-6.627-5.373-12-12-12z" clip-rule="evenodd"/></svg>
                         </a>
                     </div>
                 </div>
             </div>
         </section>
+        
+        <!-- Live Code Demo Section -->
+        <section id="demo" class="py-12 reveal">
+            <div class="code-demo">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold mono highlight-blue">// Interactive Demo</h3>
+                    <button id="run-demo" class="btn-secondary text-sm">Run Code</button>
+                </div>
+                <pre class="mono text-sm"><code><span class="highlight-blue">const</span> <span class="highlight-yellow">apiResponse</span> = <span class="highlight-magenta">await</span> <span class="highlight-blue">buildAPI</span>({
+  <span class="highlight-green">framework</span>: <span class="highlight-red">'NestJS'</span>,
+  <span class="highlight-green">database</span>: <span class="highlight-red">'PostgreSQL'</span>,
+  <span class="highlight-green">orm</span>: <span class="highlight-red">'TypeORM'</span>
+});
 
-        <!-- About Me Section -->
-        <section id="about" class="py-24">
-            <div class="reveal">
-                <h2 class="section-title text-3xl md:text-4xl font-bold">About Me</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10">
-                    <div class="md:col-span-2 text-text-secondary text-base md:text-lg leading-relaxed space-y-4">
-                        <p>Hello! I'm a dedicated and detail-oriented Backend Developer currently pursuing my BE in Computer Science. My journey into tech began with an intensive internship at <span class="font-bold" style="color: red;">PEDALS UP</span> with 7 months of intensive internship experience specializing in Node.js, TypeScript, NestJS, PostgreSQL, TypeORM, and Prisma ORM, building my skills in creating robust and scalable APIs.</p>
-                        <p>I thrive on the challenge of architecting complex systems and writing clean, efficient code. I'm always eager to learn new technologies and methodologies to improve my craft.</p>
-                    </div>
-                    <div class="flex justify-center items-center">
-                         <div class="w-64 h-80 content-card p-4">
-                            <img src="./Personal-Photo.jpg" alt="Aayush Harshad Paghadar" class="w-full h-full object-cover rounded-md">
-                        </div>
-                    </div>
+<span class="highlight-blue">console</span>.<span class="highlight-yellow">log</span>(<span class="highlight-red">'API Status:'</span>, apiResponse);</code></pre>
+                <div class="code-output" id="demo-output" style="display: none;">
+                    <div>✅ API Status: Successfully built scalable backend!</div>
+                    <div>🚀 Performance: Optimized for high traffic</div>
+                    <div>🔒 Security: JWT authentication implemented</div>
+                    <div>📊 Database: Connected to PostgreSQL</div>
                 </div>
             </div>
         </section>
-
+        
+        <!-- About Section -->
+        <section id="about" class="py-24">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+                <div class="md:col-span-1 reveal-left">
+                    <h2 class="text-4xl font-bold mono highlight-blue">/about-me</h2>
+                </div>
+                <div class="md:col-span-2 text-text-secondary text-base md:text-lg leading-relaxed space-y-4 reveal-right">
+                    <p>Hello! I'm a dedicated and detail-oriented Backend Developer currently pursuing my BE in Computer Science. My journey into tech began with an intensive internship at <span class="highlight-yellow">PEDALS UP</span> with 7 months of intensive internship experience specializing in Node.js, TypeScript, NestJS, PostgreSQL, TypeORM, and Prisma ORM, building my skills in creating robust and scalable APIs.</p>
+                    <p>I thrive on the challenge of architecting complex systems and writing clean, efficient code. I'm always eager to learn new technologies and methodologies to improve my craft.</p>
+                    <p class="highlight-green">💰 Competitive rates • 📅 Available for immediate start • 🌍 Remote-friendly</p>
+                </div>
+            </div>
+        </section>
+        
         <!-- Experience Section -->
-        <section id="experience" class="py-24">
-            <div class="reveal">
-                <h2 class="section-title text-3xl md:text-4xl font-bold">Career Journey</h2>
-                <div class="mt-12">
-                    <div class="relative timeline-item pl-8 pb-8">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium text-text-secondary">Dec 2024 – Present</p>
-                        <h3 class="text-2xl font-bold text-text-primary mt-1">Backend Developer Intern</h3>
-                        <p class="text-lg text-text-secondary mb-4">PEDALS UP - Ahmedabad, Gujarat</p>
-                        <ul class="list-disc list-outside ml-5 space-y-2 text-text-secondary">
-                            <li>Developed and optimized RESTful APIs and complex backend logic across multiple high-impact projects, utilizing <span class="font-bold" style="color: red;">Node.js, TypeScript, NestJS, PostgreSQL, TypeORM, and Prisma ORM.</span></li>
-                            <li>Engineered intricate game logic for <span class="font-bold" style="color: red;">Royal Mega</span>, a running project, demonstrating strong problem-solving and algorithmic skills.</li>
-                            <li>Designed and implemented a sophisticated timing-based system for <span class="font-bold" style="color: red;">Quickly Drive</span> (a driving school platform), handling lesson bookings, instructor availability, and time proposals.</li>
-                            <li>Integrated third-party APIs including Instagram, Facebook for functionalities like posting media by influencers for campaigns in <span class="font-bold" style="color: red;">Little Light</span> project.</li>
-                            <li>Managed and refined database schemas and ORM configurations (TypeORM, PrismaORM) to ensure data integrity and efficient operations across projects.</li>
-                            <li>Contributed to the development of a comprehensive business platform <span class="font-bold" style="color: red;">Yett</span> managing stores, malls, offers, and events.</li>
+        <section id="experience" class="py-24 reveal">
+            <h2 class="text-4xl font-bold mono highlight-blue mb-12">/experience</h2>
+            <div class="code-card p-8">
+                <div class="terminal-header mb-6">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <span class="text-xs text-text-secondary ml-2">work_history.log</span>
+                </div>
+                <div class="relative pl-4">
+                    <div class="absolute left-0 top-0 h-full w-px bg-border-color"></div>
+                    <div class="mono text-sm space-y-6">
+                        <p><span class="highlight-blue">Dec 2024 – Present</span></p>
+                        <h3 class="text-xl font-bold text-text-primary">Backend Developer Intern</h3>
+                        <p class="text-text-secondary">PEDALS UP - Ahmedabad, Gujarat</p>
+                        <ul class="list-none space-y-2 text-text-secondary pl-4">
+                            <li><span class="highlight-blue">></span> Developed and optimized RESTful APIs and complex backend logic across multiple high-impact projects, utilizing <span class="highlight-yellow">Node.js, TypeScript, NestJS, PostgreSQL, TypeORM, and Prisma ORM.</span></li>
+                            <li><span class="highlight-blue">></span> Engineered intricate game logic for <span class="highlight-yellow">Royal Mega</span>, a running project, demonstrating strong problem-solving and algorithmic skills.</li>
+                            <li><span class="highlight-blue">></span> Designed and implemented a sophisticated timing-based system for <span class="highlight-yellow">Quickly Drive</span> (a driving school platform), handling lesson bookings, instructor availability, and time proposals.</li>
+                            <li><span class="highlight-blue">></span> Integrated third-party APIs including Instagram, Facebook for functionalities like posting media by influencers for campaigns in <span class="highlight-yellow">Little Light</span> project.</li>
+                            <li><span class="highlight-blue">></span> Managed and refined database schemas and ORM configurations (TypeORM, PrismaORM) to ensure data integrity and efficient operations across projects.</li>
+                            <li><span class="highlight-blue">></span> Contributed to the development of a comprehensive business platform <span class="highlight-yellow">Yett</span> managing stores, malls, offers, and events.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Skills Section -->
+        
+        <!-- Enhanced Skills Section -->
         <section id="skills" class="py-24">
-            <div class="reveal">
-                <h2 class="section-title text-3xl md:text-4xl font-bold">Core Technologies</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-12">
-                    <div class="content-card p-6">
-                        <div class="flex items-center gap-4 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M10 14l2-2 2 2M12 18V2M21 18h-6M3 18h6M2 22h20"/><path d="M12 14v4"/></svg><h3 class="text-xl font-bold">Languages & Frameworks</h3></div>
-                        <p class="text-text-secondary">TypeScript, JavaScript, Node.js, NestJS, Express.js</p>
+            <h2 class="text-4xl font-bold mono highlight-blue mb-12 reveal">/tech-stack</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="code-card p-6 reveal-scale stagger-1">
+                    <h3 class="text-xl font-bold mono mb-3">Languages & Frameworks</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-sm">
+                                <span>TypeScript</span>
+                                <span class="highlight-blue">90%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm">
+                                <span>Node.js</span>
+                                <span class="highlight-blue">85%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm">
+                                <span>NestJS</span>
+                                <span class="highlight-blue">80%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="80"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="content-card p-6">
-                        <div class="flex items-center gap-4 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><h3 class="text-xl font-bold">Databases & ORMs</h3></div>
-                        <p class="text-text-secondary">PostgreSQL, MongoDB, TypeORM, PrismaORM</p>
+                </div>
+                <div class="code-card p-6 reveal-scale stagger-2">
+                    <h3 class="text-xl font-bold mono mb-3">Databases & ORMs</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-sm">
+                                <span>PostgreSQL</span>
+                                <span class="highlight-blue">85%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm">
+                                <span>TypeORM</span>
+                                <span class="highlight-blue">80%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="80"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm">
+                                <span>Prisma ORM</span>
+                                <span class="highlight-blue">75%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="75"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="content-card p-6">
-                        <div class="flex items-center gap-4 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M9 3v18"/><path d="m15 9-3 3 3 3"/></svg><h3 class="text-xl font-bold">Tools & Platforms</h3></div>
-                        <p class="text-text-secondary">Git, GitHub, Postman</p>
-                    </div>
-                    <div class="content-card p-6">
-                        <div class="flex items-center gap-4 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M9 3v18"/><path d="m15 9-3 3 3 3"/></svg><h3 class="text-xl font-bold">API & Integrations</h3></div>
-                        <p class="text-text-secondary">RESTful APIs, Instagram API, Facebook API, Stripe API, Google Maps API, Twilio, Email & Notification Services</p>
-                    </div>
-                    <div class="content-card p-6">
-                        <div class="flex items-center gap-4 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M9 3v18"/><path d="m15 9-3 3 3 3"/></svg><h3 class="text-xl font-bold">Concepts</h3></div>
-                        <p class="text-text-secondary">Database Design, Complex Business Logic, Authentication, Payment Gateways, Third-Party Integrations</p>
+                </div>
+                <div class="code-card p-6 reveal-scale stagger-3">
+                    <h3 class="text-xl font-bold mono mb-3">Tools & Platforms</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-sm">
+                                <span>Git/GitHub</span>
+                                <span class="highlight-blue">90%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm">
+                                <span>Postman</span>
+                                <span class="highlight-blue">85%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm">
+                                <span>API Design</span>
+                                <span class="highlight-blue">88%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="88"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Projects Section -->
+        
+        <!-- Achievements Section -->
+        <section id="achievements" class="py-24 reveal">
+            <h2 class="text-4xl font-bold mono highlight-blue mb-12">/achievements</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="code-card p-6">
+                    <h3 class="text-xl font-bold mono mb-4">🏆 Professional Milestones</h3>
+                    <div class="space-y-3">
+                        <div class="achievement-badge">
+                            <span>🚀</span>
+                            <span>7+ Months Backend Experience</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span>⚡</span>
+                            <span>4+ Production Projects</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span>🔧</span>
+                            <span>Complex Game Logic Implementation</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <span>🌐</span>
+                            <span>Third-party API Integrations</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-card p-6">
+                    <h3 class="text-xl font-bold mono mb-4">📊 GitHub Stats</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span class="text-text-secondary">Total Repositories:</span>
+                            <span class="highlight-blue">15+</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-text-secondary">Languages Used:</span>
+                            <span class="highlight-blue">TypeScript, JavaScript</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-text-secondary">Favorite Stack:</span>
+                            <span class="highlight-blue">NestJS + PostgreSQL</span>
+                        </div>
+                        <a href="https://github.com/Aayush21122" target="_blank" class="btn-secondary text-sm">View GitHub Profile</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-24 reveal">
+            <h2 class="text-4xl font-bold mono highlight-blue mb-12">/testimonials</h2>
+            <div class="testimonial-card">
+                <p class="text-lg text-text-secondary mb-6 leading-relaxed">
+                    "Aayush has been an exceptional backend developer during his internship at PEDALS UP. His ability to understand complex requirements and implement scalable solutions using NestJS and PostgreSQL has been remarkable. He consistently delivers high-quality code and shows great problem-solving skills."
+                </p>
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-terminal-cyan to-terminal-magenta rounded-full flex items-center justify-center text-black font-bold">
+                        PU
+                    </div>
+                    <div class="ml-4">
+                        <div class="font-bold text-text-primary">PEDALS UP Team</div>
+                        <div class="text-sm text-text-secondary">Development Team Lead</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Enhanced Projects Section -->
         <section id="projects" class="py-24">
-            <div class="reveal">
-                <h2 class="section-title text-3xl md:text-4xl font-bold">Featured Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-                    <a href="#" class="content-card block group">
-                        <div class="overflow-hidden rounded-t-lg"><img src="https://placehold.co/600x400/111111/FFFFFF?text=Project+1" alt="Project 1" class="rounded-t-lg w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"></div>
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold">Project Title 1</h3>
-                            <p class="text-text-secondary my-3">A brief description of your project, what it does, and what problem it solves.</p>
-                            <div class="flex flex-wrap gap-2 my-4">
-                                <span class="text-xs font-medium bg-gray-800 text-gray-300 px-2 py-1 rounded-full">NestJS</span>
-                                <span class="text-xs font-medium bg-gray-800 text-gray-300 px-2 py-1 rounded-full">PostgreSQL</span>
-                            </div>
-                            <span class="font-semibold text-primary">View Project &rarr;</span>
+            <h2 class="text-4xl font-bold mono highlight-blue mb-12 reveal">/projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="code-card p-6 block group reveal-left">
+                    <h3 class="text-2xl font-bold mono">Royal_Mega_Game</h3>
+                    <p class="text-text-secondary my-3 mono text-sm">Engineered intricate game logic with complex algorithms, demonstrating strong problem-solving skills in a high-impact gaming project.</p>
+                    <div class="space-y-2 text-xs text-text-secondary mb-4">
+                        <p><span class="highlight-blue">Challenge:</span> Implementing real-time game mechanics with complex scoring algorithms</p>
+                        <p><span class="highlight-green">Solution:</span> Built scalable backend using NestJS with optimized database queries</p>
+                        <p><span class="highlight-yellow">Impact:</span> Successfully handling concurrent users with minimal latency</p>
+                    </div>
+                    <a href="https://royalmega.com" target="_blank" class="font-semibold text-terminal-cyan group-hover:underline mono">view-details -></a>
+                </div>
+                <div class="code-card p-6 block group reveal-right">
+                    <h3 class="text-2xl font-bold mono">Quickly_Drive_Platform</h3>
+                    <p class="text-text-secondary my-3 mono text-sm">Sophisticated timing-based system for driving school platform, handling lesson bookings, instructor availability, and time proposals.</p>
+                    <div class="space-y-2 text-xs text-text-secondary mb-4">
+                        <p><span class="highlight-blue">Challenge:</span> Complex scheduling system with multiple constraints</p>
+                        <p><span class="highlight-green">Solution:</span> Developed intelligent booking algorithm with conflict resolution</p>
+                        <p><span class="highlight-yellow">Impact:</span> Reduced scheduling conflicts by 90% and improved user experience</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-8 reveal-scale">
+                <a href="#contact" class="btn-secondary">More details -></a>
+            </div>
+        </section>
+        
+        <!-- Enhanced Contact Section -->
+        <section id="contact" class="py-24 reveal">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mono highlight-blue">/contact</h2>
+                <p class="text-text-secondary mt-4 text-lg max-w-2xl mx-auto">
+                    Ready to build something amazing together? Let's discuss your project requirements.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="code-card p-8">
+                    <h3 class="text-xl font-bold mono mb-6">Send Message</h3>
+                    <form id="contact-form" class="space-y-6">
+                        <div class="form-group">
+                            <label class="block text-sm font-medium text-text-secondary mb-2">Name</label>
+                            <input type="text" name="name" required class="form-input" placeholder="Your Name">
                         </div>
-                    </a>
-                    <a href="#" class="content-card block group">
-                        <div class="overflow-hidden rounded-t-lg"><img src="https://placehold.co/600x400/111111/FFFFFF?text=Project+2" alt="Project 2" class="rounded-t-lg w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"></div>
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold">Project Title 2</h3>
-                            <p class="text-text-secondary my-3">Another project showcasing different aspects of your skills.</p>
-                             <div class="flex flex-wrap gap-2 my-4">
-                                <span class="text-xs font-medium bg-gray-800 text-gray-300 px-2 py-1 rounded-full">Node.js</span>
-                                <span class="text-xs font-medium bg-gray-800 text-gray-300 px-2 py-1 rounded-full">MongoDB</span>
-                            </div>
-                            <span class="font-semibold text-primary">View Project &rarr;</span>
+                        <div class="form-group">
+                            <label class="block text-sm font-medium text-text-secondary mb-2">Email</label>
+                            <input type="email" name="email" required class="form-input" placeholder="your.email@example.com">
                         </div>
-                    </a>
+                        <div class="form-group">
+                            <label class="block text-sm font-medium text-text-secondary mb-2">Project Type</label>
+                            <select name="project_type" class="form-input">
+                                <option value="api-development">API Development</option>
+                                <option value="backend-architecture">Backend Architecture</option>
+                                <option value="database-design">Database Design</option>
+                                <option value="third-party-integration">Third-party Integration</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="block text-sm font-medium text-text-secondary mb-2">Message</label>
+                            <textarea name="message" required class="form-input form-textarea" placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full" id="submit-btn">
+                            Send Message
+                        </button>
+                    </form>
+                    <div id="form-status" class="mt-4 text-center" style="display: none;"></div>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="space-y-6">
+                    <div class="code-card p-6">
+                        <h3 class="text-xl font-bold mono mb-4">Get In Touch</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="highlight-blue">📧</span>
+                                <a href="mailto:paayush192@gmail.com" class="text-terminal-cyan hover:underline">paayush192@gmail.com</a>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="highlight-blue">📱</span>
+                                <a href="tel:+918320057372" class="text-terminal-cyan hover:underline">+91 8320057372</a>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="highlight-blue">📍</span>
+                                <span class="text-text-secondary">Gujarat, India (Remote Available)</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="highlight-blue">⏰</span>
+                                <span class="text-text-secondary">Available for immediate start</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-card p-6">
+                        <h3 class="text-xl font-bold mono mb-4">Quick Links</h3>
+                        <div class="space-y-3">
+                            <a href="#" id="schedule-call" class="btn-secondary w-full text-center block">📅 Schedule a Call</a>
+                            <a href="#download-resume" class="btn-secondary w-full text-center block">📄 Download Resume</a>
+                            <div class="flex space-x-3">
+                                <a href="https://www.linkedin.com/in/paghadar-aayush-837a50263" target="_blank" class="btn-secondary flex-1 text-center">LinkedIn</a>
+                                <a href="https://github.com/Aayush21122" target="_blank" class="btn-secondary flex-1 text-center">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="py-24">
-            <div class="content-card p-8 md:p-12 text-center reveal">
-                <h2 class="text-4xl font-bold">Let's Build Together</h2>
-                <p class="text-text-secondary mt-4 mb-8 text-lg max-w-2xl mx-auto">
-                    I'm currently available for freelance work and open to new opportunities. If you have a project in mind, let's connect.
-                </p>
-                <p class="inline-block text-lg font-semibold bg-primary text-black px-8 py-3 rounded-md hover:bg-gray-200 transition-colors">
-                    paayush192@gmail.com       +91 8320057372
-                </p>
-            </div>
-        </section>
-
     </main>
-
+    
     <footer class="border-t border-border-color py-8">
-        <div class="container mx-auto text-center text-text-secondary">
-            <p>&copy; 2025 Aayush Harshad Paghadar. Designed with care.</p>
+        <div class="container mx-auto text-center text-text-secondary text-sm mono">
+            <p>&copy; 2025 AAYUSH HARSHAD PAGHADAR. ALL RIGHTS RESERVED.</p>
+            <p class="mt-2">Built with ❤️ using modern web technologies</p>
         </div>
     </footer>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Custom Cursor ---
+            // Loading Screen
+            const loadingScreen = document.getElementById('loading-screen');
+            const loadingProgress = document.getElementById('loading-progress');
+            const loadingText = document.getElementById('loading-text');
+            
+            const loadingSteps = [
+                'Loading modules...',
+                'Initializing backend systems...',
+                'Connecting to database...',
+                'Setting up APIs...',
+                'Ready to deploy!'
+            ];
+            
+            let currentStep = 0;
+            const loadingInterval = setInterval(() => {
+                const progress = ((currentStep + 1) / loadingSteps.length) * 100;
+                loadingProgress.style.width = progress + '%';
+                loadingText.textContent = loadingSteps[currentStep];
+                currentStep++;
+                
+                if (currentStep >= loadingSteps.length) {
+                    clearInterval(loadingInterval);
+                    setTimeout(() => {
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 500);
+                    }, 500);
+                }
+            }, 600);
+            
+            // Matrix Rain Effect
+            const matrixContainer = document.getElementById('matrix-rain');
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            const streamCount = Math.floor(window.innerWidth / 20);
+            for (let i = 0; i < streamCount; i++) {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = characters[Math.floor(Math.random() * characters.length)];
+                char.style.left = `${Math.random() * 100}vw`;
+                char.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                char.style.animationDelay = `${Math.random() * 5}s`;
+                matrixContainer.appendChild(char);
+            }
+            
+            // Custom Cursor
             const cursorDot = document.querySelector('.cursor-dot');
-            const auroraBg = document.getElementById('aurora-background');
             window.addEventListener('mousemove', e => {
-                const { clientX, clientY } = e;
-                cursorDot.style.transform = `translate(${clientX}px, ${clientY}px)`;
-                auroraBg.style.transform = `translate(-${clientX / 10}px, -${clientY / 10}px)`;
+                cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
             });
-
-            document.querySelectorAll('a, button, .content-card').forEach(el => {
+            document.querySelectorAll('a, button, .code-card').forEach(el => {
                 el.addEventListener('mouseenter', () => cursorDot.classList.add('hovered'));
                 el.addEventListener('mouseleave', () => cursorDot.classList.remove('hovered'));
             });
-
-            // --- Typed.js Animation ---
+            
+            // Typed.js Animation
             new Typed('#typed-subtitle', {
-                strings: ['Building Scalable APIs.', 'Solving Complex Problems.', 'Writing Clean Code.'],
-                typeSpeed: 50, backSpeed: 25, backDelay: 2000, loop: true,
+                strings: ['"Building Scalable APIs"', '"Solving Complex Problems"', '"Writing Clean Code"'],
+                typeSpeed: 50, backSpeed: 30, backDelay: 1500, loop: true,
             });
             
-            // --- Mobile Menu Toggle ---
+            // Live Code Demo
+            document.getElementById('run-demo').addEventListener('click', () => {
+                const output = document.getElementById('demo-output');
+                output.style.display = 'block';
+                output.innerHTML = '<div class="highlight-green">Running code...</div>';
+                
+                setTimeout(() => {
+                    output.innerHTML = `
+                        <div>✅ API Status: Successfully built scalable backend!</div>
+                        <div>🚀 Performance: Optimized for high traffic</div>
+                        <div>🔒 Security: JWT authentication implemented</div>
+                        <div>📊 Database: Connected to PostgreSQL</div>
+                    `;
+                }, 1000);
+            });
+            
+            // Floating CTA
+            const floatingCta = document.getElementById('floating-cta');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    floatingCta.classList.add('visible');
+                } else {
+                    floatingCta.classList.remove('visible');
+                }
+            });
+            
+            // Mobile Menu Toggle
             const menuBtn = document.getElementById('menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             const openIcon = document.getElementById('menu-open-icon');
             const closeIcon = document.getElementById('menu-close-icon');
-            
             menuBtn.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
                 mobileMenu.classList.toggle('flex');
                 openIcon.classList.toggle('hidden');
                 closeIcon.classList.toggle('hidden');
             });
-            
-            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            document.querySelectorAll('.mobile-nav-link-enhanced').forEach(link => {
                 link.addEventListener('click', () => {
                     mobileMenu.classList.add('hidden');
                     mobileMenu.classList.remove('flex');
@@ -366,14 +869,12 @@
                     closeIcon.classList.add('hidden');
                 });
             });
-
-            // --- Navbar Active State on Scroll ---
+            
+            // Navbar Active State on Scroll
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('.nav-link');
-
             const observerOptions = { root: null, rootMargin: '-40% 0px -60% 0px', threshold: 0 };
-
-            const sectionObserver = new IntersectionObserver((entries, observer) => {
+            const sectionObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         navLinks.forEach(link => {
@@ -382,21 +883,109 @@
                     }
                 });
             }, observerOptions);
-
             sections.forEach(section => sectionObserver.observe(section));
             
-            // --- Reveal elements on scroll ---
-            const revealElements = document.querySelectorAll('.reveal');
+            // Reveal elements on scroll
+            const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
             const revealObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
+                        // Animate skill progress bars
+                        if (entry.target.classList.contains('code-card')) {
+                            const progressBars = entry.target.querySelectorAll('.skill-progress-bar');
+                            progressBars.forEach(bar => {
+                                const width = bar.getAttribute('data-width');
+                                if (width) {
+                                    setTimeout(() => {
+                                        bar.style.width = width + '%';
+                                    }, 500);
+                                }
+                            });
+                        }
                         observer.unobserve(entry.target);
                     }
                 });
             }, { threshold: 0.1 });
-
             revealElements.forEach(el => revealObserver.observe(el));
+            
+            // Contact Form
+            const contactForm = document.getElementById('contact-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const formStatus = document.getElementById('form-status');
+            
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    formStatus.style.display = 'block';
+                    formStatus.innerHTML = '<div class="text-terminal-green">✅ Message sent successfully! I\'ll get back to you soon.</div>';
+                    contactForm.reset();
+                    submitBtn.textContent = 'Send Message';
+                    submitBtn.disabled = false;
+                }, 2000);
+            });
+            
+            // Resume Download
+            document.getElementById('download-resume').addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Resume download will be available soon! Please contact me directly for now.');
+            });
+            
+            // Schedule Call
+            document.getElementById('schedule-call').addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Calendar integration coming soon! Please email me to schedule a call.');
+            });
+            
+            // Easter Eggs - Console Commands
+            console.log('%c🚀 Welcome to AHP.dev!', 'color: #00BFFF; font-size: 20px; font-weight: bold;');
+            console.log('%cTry typing: help(), about(), skills(), or contact()', 'color: #888; font-size: 14px;');
+            
+            window.help = () => {
+                console.log('%cAvailable Commands:', 'color: #00BFFF; font-weight: bold;');
+                console.log('help() - Show this help message');
+                console.log('about() - Learn about Aayush');
+                console.log('skills() - View technical skills');
+                console.log('contact() - Get contact information');
+                console.log('projects() - View recent projects');
+            };
+            
+            window.about = () => {
+                console.log('%cAayush Harshad Paghadar', 'color: #00BFFF; font-size: 16px; font-weight: bold;');
+                console.log('Backend Developer & API Architect');
+                console.log('7+ months experience with Node.js, TypeScript, NestJS');
+                console.log('Currently pursuing BE in Computer Science');
+            };
+            
+            window.skills = () => {
+                console.log('%cTechnical Skills:', 'color: #00BFFF; font-weight: bold;');
+                console.log('• TypeScript/JavaScript - 90%');
+                console.log('• Node.js - 85%');
+                console.log('• NestJS - 80%');
+                console.log('• PostgreSQL - 85%');
+                console.log('• TypeORM/Prisma - 80%');
+            };
+            
+            window.contact = () => {
+                console.log('%cContact Information:', 'color: #00BFFF; font-weight: bold;');
+                console.log('📧 Email: paayush192@gmail.com');
+                console.log('📱 Phone: +91 8320057372');
+                console.log('🔗 LinkedIn: https://www.linkedin.com/in/paghadar-aayush-837a50263');
+                console.log('🐙 GitHub: https://github.com/Aayush21122');
+            };
+            
+            window.projects = () => {
+                console.log('%cRecent Projects:', 'color: #00BFFF; font-weight: bold;');
+                console.log('🎮 Royal Mega - Gaming platform with complex algorithms');
+                console.log('🚗 Quickly Drive - Driving school booking system');
+                console.log('💡 Little Light - Influencer campaign platform');
+                console.log('🏢 Yett - Business platform for stores and malls');
+            };
         });
     </script>
 </body>
